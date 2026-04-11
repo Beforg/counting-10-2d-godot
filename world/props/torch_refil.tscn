@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dmktt3js3evqy"]
+
+[ext_resource type="Script" uid="uid://c3bnux6p17rc3" path="res://world/levels/torch_refil.gd" id="1_g4fbo"]
+[ext_resource type="Texture2D" uid="uid://cktghju7c4h8x" path="res://assets/torch.png" id="2_jvndp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w5gid"]
+
+[node name="TorchRefil" type="Area2D" unique_id=929361570]
+script = ExtResource("1_g4fbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=175567214]
+shape = SubResource("CircleShape2D_w5gid")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2133723941]
+position = Vector2(1.0000005, -2)
+scale = Vector2(0.038208008, 0.038208008)
+texture = ExtResource("2_jvndp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://cxjbrrddan06q"]
+
+[ext_resource type="Script" uid="uid://c18ftqt1t7l3k" path="res://world/levels/player.gd" id="1_w5gid"]
+[ext_resource type="Texture2D" uid="uid://br7g2e2ocjh4u" path="res://assets/personagem.png" id="3_1xuw6"]
+[ext_resource type="PackedScene" uid="uid://dmktt3js3evqy" path="res://world/props/torch_refil.tscn" id="3_k00am"]
+[ext_resource type="PackedScene" uid="uid://d1hewtu8hugs8" path="res://entities/enemies/enemy.tscn" id="5_c6wff"]
+[ext_resource type="Script" uid="uid://ctg7unfjlu1ja" path="res://entities/enemies/enemy.gd" id="6_vgxu7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k00am"]
+size = Vector2(14, 35)
+
+[sub_resource type="Gradient" id="Gradient_g2iar"]
+offsets = PackedFloat32Array(0.006024096, 0.22891566, 0.9939759)
+colors = PackedColorArray(0.9137255, 0.7411765, 0.13333334, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b3ony"]
+gradient = SubResource("Gradient_g2iar")
+width = 50
+height = 50
+fill = 1
+fill_from = Vector2(0.5, 0.4826087)
+fill_to = Vector2(0.9434783, 0.92753625)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xuw6"]
+atlas = ExtResource("3_1xuw6")
+region = Rect2(0, 0, 203, 339)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6wff"]
+atlas = ExtResource("3_1xuw6")
+region = Rect2(195, 0, 195, 319)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgxu7"]
+atlas = ExtResource("3_1xuw6")
+region = Rect2(390, 0, 195, 319)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ecds7"]
+atlas = ExtResource("3_1xuw6")
+region = Rect2(585, 0, 195, 319)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74oec"]
+atlas = ExtResource("3_1xuw6")
+region = Rect2(780, 0, 195, 319)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bgq80"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xuw6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6wff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgxu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ecds7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74oec")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[node name="world" type="Node2D" unique_id=576676519]
+
+[node name="Chao" type="ColorRect" parent="." unique_id=739422621]
+custom_minimum_size = Vector2(2000, 2000)
+offset_top = 4.0
+offset_right = 2000.0
+offset_bottom = 2004.0
+color = Color(0.16470589, 0.2, 0.13333334, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=477838075]
+color = Color(0.007843138, 0.078431375, 0.21960784, 1)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1035332311]
+position = Vector2(32, 43)
+up_direction = Vector2(0.9805807, -0.19611613)
+script = ExtResource("1_w5gid")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=543616310]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_k00am")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1102647753]
+position = Vector2(1, 0)
+zoom = Vector2(3, 3)
+
+[node name="PointLight2D" type="PointLight2D" parent="Player" unique_id=222395566]
+position = Vector2(10, -5)
+energy = 1.45
+texture = SubResource("GradientTexture2D_b3ony")
+texture_scale = 8.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=668708430]
+texture_filter = 1
+position = Vector2(0, 1)
+scale = Vector2(0.11966969, 0.11966969)
+sprite_frames = SubResource("SpriteFrames_bgq80")
+animation = &"walk"
+
+[node name="TorchRefil" parent="." unique_id=929361570 instance=ExtResource("3_k00am")]
+position = Vector2(216, 84)
+
+[node name="Enemy" parent="." unique_id=1578309716 node_paths=PackedStringArray("player") instance=ExtResource("5_c6wff")]
+position = Vector2(210, 138)
+script = ExtResource("6_vgxu7")
+player = NodePath("../Player")
