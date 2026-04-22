@@ -8,11 +8,11 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	print("ALGO ENCOSTOU NO ITEM! Nome do corpo: ", body.name)
+	print(">>> ALGO ENCOSTOU NO ITEM <<< Nome do corpo: ", body.name)
 	
 	if body.has_method("refill_torch"):
 		print("O corpo tem a função refill_torch! Curando e deletando item...")
 		body.refill_torch(refill_amount)
 		queue_free() 
 	else:
-		print("X O corpo não tem a função refill_torch.")
+		print("O corpo não tem a função refill_torch.")
