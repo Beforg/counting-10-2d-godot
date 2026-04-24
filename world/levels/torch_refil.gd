@@ -13,6 +13,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("refill_torch"):
 		print("O corpo tem a função refill_torch! Curando e deletando item...")
 		body.refill_torch(refill_amount)
+		GameManager.collect_torch_refill()
 		queue_free() 
 	else:
 		print("O corpo não tem a função refill_torch.")

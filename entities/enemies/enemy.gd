@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 					teleport_near_player(current_safe_zone)
 				
 				# Corre pra matar
-				if distance > 15.0:
+				if distance > 25.0:
 					var dir = global_position.direction_to(player.global_position)
 					velocity = dir * hunt_speed
 					move_and_slide()
