@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://chclbkqpt3pj7"]
+
+[ext_resource type="Script" uid="uid://d0c7s5473tvvm" path="res://world/levels/adrenalina_item.gd" id="1_i2x38"]
+[ext_resource type="Texture2D" uid="uid://nfivybxebd8b" path="res://assets/seringa2.png" id="2_jvjvn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xwmj"]
+
+[node name="AdrenalinaItem" type="Area2D" unique_id=1623921430]
+script = ExtResource("1_i2x38")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=548940360]
+position = Vector2(8.25, 3.5000153)
+shape = SubResource("RectangleShape2D_8xwmj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=325445546]
+position = Vector2(7.25, 5.5)
+scale = Vector2(0.03417969, 0.03417969)
+texture = ExtResource("2_jvjvn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

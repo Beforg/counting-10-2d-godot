@@ -41,7 +41,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_4teby")
 }],
 "loop": true,
-"name": &"iddle",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -88,5 +88,4 @@ shape = SubResource("CircleShape2D_owq46")
 position = Vector2(4.7683716e-07, -4.000001)
 scale = Vector2(0.20312501, 0.20312499)
 sprite_frames = SubResource("SpriteFrames_bjdlj")
-animation = &"down"
-frame_progress = 0.8014993
+animation = &"idle"

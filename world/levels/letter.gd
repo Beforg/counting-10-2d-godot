@@ -1,22 +1,28 @@
 extends Area2D
 
-@export_multiline var letter_text: String = "Escreva a história aqui..."
-var player_near: bool = false
-
-func _input(event: InputEvent) -> void:
-	if player_near and event.is_action_pressed("interagir"): # Configure a tecla 'E' no Input Map
-		_show_letter()
+@export_multiline var lore_text: String = "Escreva aqui a história..."
+var can_read: bool = false
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		player_near = true
-		# Opcional: mostrar um "Aperte E para ler" na tela
+		can_read = true
+		print("Pressione E para ler")
 
-func _on_body_removed(body: Node2D) -> void:
+func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
-		player_near = false
+		can_read = false
 
-func _show_letter():
-	# Acesse o HUD para mostrar o texto e pausar o jogo
-	var hud = get_tree().current_scene.find_child("HUD")
-	hud.show_letter(letter_text)
+func _input(event: InputEvent):
+	if can_read and event.is_action_pressed("interagir"):
+		
+		# O "true, false" é a mágica:
+		# true = procura dentro de todos os nós recursivamente
+		# false = ignora a regra de "dono" da cena, vasculhando até dentro do Player
+		var hud = get_tree().current_scene.find_child("HUD", true, false)
+		
+		if hud:
+			print("SUCESSO: HUD encontrado! Abrindo a carta...")
+			hud.show_letter(lore_text)
+		else:
+			# Se cair aqui, é porque o nome do nó está diferente de "HUD"
+			print("ERRO: O nó 'HUD' não foi encontrado. Verifique se o nome está escrito com letras maiúsculas!")
