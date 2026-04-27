@@ -1,17 +1,21 @@
 [gd_scene format=3 uid="uid://kba8cgaistm8"]
 
 [ext_resource type="Script" uid="uid://wdtxywuv6itp" path="res://world/levels/gasoline_can.gd" id="1_xxm15"]
-[ext_resource type="Texture2D" uid="uid://cy1stlseyvo50" path="res://assets/tmp_galao.png" id="2_dnkgn"]
+[ext_resource type="Texture2D" uid="uid://cq3basimfl8s7" path="res://assets/galao.png" id="2_dnkgn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15ww5"]
+size = Vector2(26, 28)
 
-[node name="GasolineCan" type="Area2D" unique_id=1159960588]
+[node name="GasolineCan" type="Area2D" unique_id=324444265]
 script = ExtResource("1_xxm15")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1294100649]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=709344727]
+position = Vector2(-0.41064453, -0.410614)
 shape = SubResource("RectangleShape2D_15ww5")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=795994755]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1608861951]
+position = Vector2(2.5892944, 0.58932495)
+scale = Vector2(0.07794677, 0.07794679)
 texture = ExtResource("2_dnkgn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

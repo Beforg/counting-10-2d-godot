@@ -1,15 +1,92 @@
 [gd_scene format=3 uid="uid://d1hewtu8hugs8"]
 
-[ext_resource type="Texture2D" uid="uid://b3s8v0yfjbh5n" path="res://icon.svg" id="1_owq46"]
+[ext_resource type="Texture2D" uid="uid://bdji52of8qy5" path="res://assets/enemy_down1.png" id="1_sb13e"]
+[ext_resource type="Texture2D" uid="uid://8cli3gc26xq6" path="res://assets/enemy_down2.png" id="2_3udgd"]
+[ext_resource type="Texture2D" uid="uid://bsl01ipq0up3l" path="res://assets/enemy_down3.png" id="3_vabdn"]
+[ext_resource type="Texture2D" uid="uid://b7pmdtisy8wmv" path="res://assets/enemy_iddle.png" id="4_nrfwl"]
+[ext_resource type="Texture2D" uid="uid://c8kgf56ougq75" path="res://assets/enemy_right1.png" id="5_5xow2"]
+[ext_resource type="Texture2D" uid="uid://ckagjdufd77ot" path="res://assets/enemy_right2.png" id="6_xmuku"]
+[ext_resource type="Texture2D" uid="uid://bfk1ctr56xes5" path="res://assets/enemy_right3.png" id="7_2ggct"]
+[ext_resource type="Texture2D" uid="uid://bbjc1vc44wg4r" path="res://assets/enemy_top1.png" id="8_wy1il"]
+[ext_resource type="Texture2D" uid="uid://b0bo143c217qr" path="res://assets/enemy_top2.png" id="9_53k0f"]
+[ext_resource type="Texture2D" uid="uid://cj71bq6v5lmid" path="res://assets/enemy_top3.png" id="10_u01qb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1xuw6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_owq46"]
+radius = 141.01419
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4teby"]
+atlas = ExtResource("4_nrfwl")
+region = Rect2(96, 0, 96, 260)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjdlj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_sb13e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3udgd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vabdn")
+}],
+"loop": true,
+"name": &"down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4teby")
+}],
+"loop": true,
+"name": &"iddle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5xow2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xmuku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2ggct")
+}],
+"loop": true,
+"name": &"right",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_wy1il")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_53k0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_u01qb")
+}],
+"loop": true,
+"name": &"top",
+"speed": 10.0
+}]
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1578309716]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=947846974]
 shape = SubResource("RectangleShape2D_1xuw6")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=985287004]
-position = Vector2(1, -2)
-scale = Vector2(0.2109375, 0.2109375)
-texture = ExtResource("1_owq46")
+[node name="TerrorAura" type="Area2D" parent="." unique_id=875840805]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrorAura" unique_id=1363930349]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_owq46")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=695154779]
+position = Vector2(4.7683716e-07, -4.000001)
+scale = Vector2(0.20312501, 0.20312499)
+sprite_frames = SubResource("SpriteFrames_bjdlj")
+animation = &"down"
+frame_progress = 0.8014993
