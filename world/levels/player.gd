@@ -9,7 +9,7 @@ extends CharacterBody2D
 var adrenaline_timer: float = 0.0
 
 # --- Variáveis da Tocha ---
-@export var light_drain_rate: float = 0.1 
+@export var light_drain_rate: float = 0.05 
 @onready var torch: PointLight2D = $PointLight2D 
 @onready var anim = $AnimatedSprite2D
 @onready var step_sound = $StepSound
@@ -59,7 +59,6 @@ func _physics_process(delta: float) -> void:
 		step_sound.stop()
 	
 	# --- 4. APLICAÇÃO DO MOVIMENTO ---
-	print("Lendo Adrenalina: ", GameManager.is_adrenaline_active, " | Velocidade Alvo: ", speed, " | Vício: ", GameManager.is_addicted)
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -70,23 +69,27 @@ func _process(delta: float) -> void:
 		# Só drena se tiver pegado o primeiro galão
 		if GameManager.gasoline_count > 0: 
 			torch.texture_scale -= light_drain_rate * delta
+			print(torch.texture_scale)
 		
 	# --- GESTÃO DE VELOCIDADE (Aqui a mágica tem que acontecer) ---
 	if GameManager.is_adrenaline_active:
 		if GameManager.is_addicted:
-			speed = walk_speed * 1.2 # Fica um pouco mais rápido (90)
+			speed = 100 # Fica um pouco mais rápido (90)
 		else:
-			speed = walk_speed * 3.0 # Fica MUITO rápido (225)
+			speed = 120 
 	elif GameManager.terror_level >= 50.0:
-		speed = walk_speed * 0.5 # Fica lento (37.5)
+		speed = 55 # Fica lento (37.5)
 	else:
 		speed = walk_speed # Normal (75)
 
 func _input(event: InputEvent) -> void:
 	# USAR CURA (Tecla configurada no Input Map)
+	var item_sound = $UseItem
 	if event.is_action_pressed("usar_cura"):
 		if GameManager.cures_count > 0:
 			GameManager.cures_count -= 1
+			GameManager.terror_level = 0
+			item_sound.play()
 			GameManager.is_addicted = false # Remove o vício
 			print("Você usou a cura! Estado normalizado.")
 		else:
@@ -97,14 +100,16 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("usar_adrenalina"):
 		if GameManager.try_use_adrenaline():
 			# Só reduz o terror. O _process ali em cima vai cuidar da velocidade!
+			item_sound.play()
 			GameManager.terror_level = max(0.0, GameManager.terror_level - 30.0)
 			print("PLAYER: Adrenalina injetada!")
 
 	# USAR REFIL DE TOCHA (Tecla configurada no Input Map)
 	if event.is_action_pressed("usar_tocha"):
 		if GameManager.torch_refills > 0:
+			item_sound.play()
 			GameManager.torch_refills -= 1
-			torch.texture_scale = 8 
+			torch.texture_scale = 10 
 			print("Tocha recarregada!")
 
 func refill_torch(amount: float) -> void:
@@ -112,10 +117,10 @@ func refill_torch(amount: float) -> void:
 
 func _on_difficulty_increased(level: int) -> void:
 	if level == 1:
-		light_drain_rate = 0.15 # Gasta 50% mais rápido
+		light_drain_rate = 0.1 # Gasta 50% mais rápido
 		print("PLAYER: A tocha está falhando mais rápido (Nível 1)")
 	elif level == 2:
-		light_drain_rate = 0.25 # Gasta muito mais rápido!
+		light_drain_rate = 0.2 # Gasta muito mais rápido!
 		print("PLAYER: A tocha está derretendo! (Nível 2)")
 		
 func _update_heartbeat_audio():

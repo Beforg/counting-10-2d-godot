@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cim5ai1l1clcj"]
+
+[ext_resource type="Script" uid="uid://ce1hy4ve5u8dl" path="res://world/levels/dolar.gd" id="1_ajv7t"]
+[ext_resource type="Texture2D" uid="uid://cdqy22accbxks" path="res://assets/dolar.png" id="2_7lpuq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qmul6"]
+
+[node name="Dolar" type="Area2D" unique_id=1382344995]
+script = ExtResource("1_ajv7t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2116327206]
+position = Vector2(6.203125, 2.46875)
+shape = SubResource("RectangleShape2D_qmul6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=309133058]
+position = Vector2(5.203125, 1.46875)
+scale = Vector2(0.026306158, 0.026306158)
+texture = ExtResource("2_7lpuq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

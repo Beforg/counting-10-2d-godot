@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cbycxev4ri25s"]
+
+[ext_resource type="Script" uid="uid://da0pk1wlqc4ll" path="res://world/levels/cura_item.gd" id="1_q1ef8"]
+[ext_resource type="Texture2D" uid="uid://c4lqn5yinln3h" path="res://assets/seringa1.png" id="2_umaep"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_281gv"]
+
+[node name="CuraItem" type="Area2D" unique_id=1805614742]
+script = ExtResource("1_q1ef8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1085542897]
+position = Vector2(-2, 2)
+scale = Vector2(0.03857422, 0.03857422)
+texture = ExtResource("2_umaep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=699674902]
+shape = SubResource("RectangleShape2D_281gv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
