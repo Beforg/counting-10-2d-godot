@@ -4,8 +4,8 @@ enum State { HIDDEN, STALKING, HUNTING }
 var current_state: State = State.HIDDEN
 var is_active: bool = false # Começa dormindo
 @onready var anim = $AnimatedSprite2D
-@export var stalk_speed: float = 70.0
-@export var hunt_speed: float = 280.0
+@export var stalk_speed: float = 75.0
+@export var hunt_speed: float = 165.0
 @export var base_light_radius: float = 25.0
 @onready var terror_aura = $TerrorAura
 @export var player: Node2D
@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 				visible = true
 				
 				# O BOTE
-				if distance > 600.0:
+				if distance > 400.0:
 					teleport_near_player(current_safe_zone)
 				
 				# Corre pra matar

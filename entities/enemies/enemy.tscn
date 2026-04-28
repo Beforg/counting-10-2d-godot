@@ -14,7 +14,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1xuw6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owq46"]
-radius = 141.01419
+radius = 103.23759
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4teby"]
 atlas = ExtResource("4_nrfwl")

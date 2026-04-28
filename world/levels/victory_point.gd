@@ -13,4 +13,4 @@ func win_game():
 	# get_tree().change_scene_to_file("res://win_screen.tscn")
 	# Por enquanto, vamos apenas resetar o jogo:
 	GameManager.reset_game()
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://win_screen.tscn")
