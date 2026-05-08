@@ -34,13 +34,13 @@ func _physics_process(delta: float) -> void:
 			teleport_near_player(current_safe_zone)
 			distance = global_position.distance_to(player.global_position)
 			
-		# --- 3. DEFINIÇÃO DE ESTADOS ---
+		# --- DEFINIÇÃO DE ESTADOS ---
 		var is_furious = (current_state == State.HUNTING and GameManager.terror_level > 90.0)
 		
 		if GameManager.terror_level >= 98.00 or is_furious:
 			current_state = State.HUNTING
 			current_safe_zone = 0.0 # Ignora a luz totalmente
-		elif light > 8.5:
+		elif light > 9.5:
 			current_state = State.HIDDEN
 		elif light > 4.5: 
 			current_state = State.STALKING
@@ -48,13 +48,12 @@ func _physics_process(delta: float) -> void:
 			current_state = State.HUNTING
 			current_safe_zone = 0.0
 			
-		# --- A AÇÃO ---
 # --- A AÇÃO ---
 		match current_state:
 			
 			State.HIDDEN:
 				var dir = global_position.direction_to(player.global_position)
-				visible = GameManager.terror_level > 25
+				visible = GameManager.terror_level > 15
 				velocity = dir * stalk_speed * 0.4
 				move_and_slide()
 				
@@ -124,7 +123,7 @@ func _physics_process(delta: float) -> void:
 func teleport_near_player(safe_zone: float) -> void:
 	var random_angle = randf() * TAU 
 	# Distância ajustada: Ele aparece no limite da luz
-	var spawn_distance = max(150.0, safe_zone + 20.0)
+	var spawn_distance = max(150.0, safe_zone + 27.0)
 	
 	var offset = Vector2(cos(random_angle), sin(random_angle)) * spawn_distance
 	global_position = player.global_position + offset

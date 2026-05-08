@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var refill_amount: float = 1 # Quanto de "vida" a tocha ganha
+@export var refill_amount: float = 1 
 func _ready() -> void:
 	pass
 func _process(delta: float) -> void:

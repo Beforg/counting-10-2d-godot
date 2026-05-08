@@ -24,7 +24,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var input_direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
-	# --- 1. LÓGICA DE ANIMAÇÃO ---
+	# --- LÓGICA DE ANIMAÇÃO ---
 	if input_direction != Vector2.ZERO:
 		if abs(input_direction.x) > abs(input_direction.y):
 			# Movimento horizontal
@@ -40,25 +40,22 @@ func _physics_process(delta: float) -> void:
 	else:
 		anim.play("idle")
 	
-	# --- 2. LÓGICA DE CÁLCULO DE VELOCIDADE ---
+	# --- LÓGICA DE CÁLCULO DE VELOCIDADE ---
 	if input_direction != Vector2.ZERO:
 		velocity = velocity.move_toward(input_direction * speed, acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	
-	# --- 3. LÓGICA DE SOM DOS PASSOS (CORRIGIDA) ---
 	if velocity.length() > 0:
-		# Se está andando e o timer terminou de contar
 		if step_timer.is_stopped():
 			step_sound.pitch_scale = randf_range(0.8, 1.2) 
 			step_sound.play()
-			step_timer.start() # Inicia o timer para o próximo passo
+			step_timer.start() 
 	else:
-		# Se o jogador parar do nada, cancela o timer e corta o som na hora
 		step_timer.stop()
 		step_sound.stop()
 	
-	# --- 4. APLICAÇÃO DO MOVIMENTO ---
+	# --- APLICAÇÃO DO MOVIMENTO ---
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -71,19 +68,18 @@ func _process(delta: float) -> void:
 			torch.texture_scale -= light_drain_rate * delta
 			print(torch.texture_scale)
 		
-	# --- GESTÃO DE VELOCIDADE (Aqui a mágica tem que acontecer) ---
+	# --- GESTÃO DE VELOCIDADE ---
 	if GameManager.is_adrenaline_active:
 		if GameManager.is_addicted:
-			speed = 100 # Fica um pouco mais rápido (90)
+			speed = 100 
 		else:
 			speed = 120 
 	elif GameManager.terror_level >= 50.0:
-		speed = 55 # Fica lento (37.5)
+		speed = 55 
 	else:
-		speed = walk_speed # Normal (75)
+		speed = walk_speed 
 
 func _input(event: InputEvent) -> void:
-	# USAR CURA (Tecla configurada no Input Map)
 	var item_sound = $UseItem
 	if event.is_action_pressed("usar_cura"):
 		if GameManager.cures_count > 0:
@@ -95,21 +91,19 @@ func _input(event: InputEvent) -> void:
 		else:
 			print("Você não tem curas!")
 	
-	# USAR ADRENALINA (Tecla configurada no Input Map)
 # USAR ADRENALINA (Tecla Q)
 	if event.is_action_pressed("usar_adrenalina"):
 		if GameManager.try_use_adrenaline():
-			# Só reduz o terror. O _process ali em cima vai cuidar da velocidade!
 			item_sound.play()
 			GameManager.terror_level = max(0.0, GameManager.terror_level - 30.0)
 			print("PLAYER: Adrenalina injetada!")
 
-	# USAR REFIL DE TOCHA (Tecla configurada no Input Map)
+	# USAR REFIL DE TOCHA (R)
 	if event.is_action_pressed("usar_tocha"):
 		if GameManager.torch_refills > 0:
 			item_sound.play()
 			GameManager.torch_refills -= 1
-			torch.texture_scale = 10 
+			torch.texture_scale = clamp(torch.texture_scale + 1, 0.2, 9.99)
 			print("Tocha recarregada!")
 
 func refill_torch(amount: float) -> void:
@@ -117,21 +111,21 @@ func refill_torch(amount: float) -> void:
 
 func _on_difficulty_increased(level: int) -> void:
 	if level == 1:
-		light_drain_rate = 0.1 # Gasta 50% mais rápido
+		light_drain_rate = 0.1 
 		print("PLAYER: A tocha está falhando mais rápido (Nível 1)")
 	elif level == 2:
-		light_drain_rate = 0.2 # Gasta muito mais rápido!
+		light_drain_rate = 0.17
 		print("PLAYER: A tocha está derretendo! (Nível 2)")
 		
 func _update_heartbeat_audio():
 	var level = GameManager.terror_level
 	
-	if level >= 60:
+	if level >= 50:
 		# Terror Crítico: Toca o rápido, para o lento
 		if not heart_high.playing:
 			heart_high.play()
 			heart_low.stop()
-	elif level >= 30:
+	elif level >= 25:
 		# Terror Moderado: Toca o lento, para o rápido
 		if not heart_low.playing:
 			heart_low.play()
